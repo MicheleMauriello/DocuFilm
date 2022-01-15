@@ -1,0 +1,94 @@
+1) Registrazione utente
+end-point /registrazioneUtente POST
+input 	        user:string
+		pass:string
+output	{"usr":string}
+		SESSION {
+			status:string{"registrato"};
+			nome_utente:string}
+			
+2)Login 
+end-point: 	 /login POST
+input:			user:stringa 
+		        pass:stringa
+
+output	{"usr":string}
+		SESSION {
+			status:string{"loggato"};
+			nome_utente:string}
+			
+3)Cerca un dvd
+end-point  /find POST
+input
+		nome:string
+                anno:string
+		prezzo:double
+                data:data
+                disponibile:string
+                
+		SESSION{nome_utente:string,user:string}
+output	{
+nome:string;anno:string;prezzo:double;disponibile:string; data:data
+	}
+
+4)Scegliere e noleggiare un dvd
+end-point  /buy POST
+input
+		nome:string
+                anno:string
+		prezzo:double
+                disponibile:string
+                data:data
+                
+		SESSION{nome_utente:string,user:string}
+output	{
+		nome:string; anno:string; prezzo:double; data:data disponibile:string; data:data
+	}
+
+
+5)Scadenza del noleggio
+end-point  /get POST
+input
+		nome:string
+                anno:string
+		prezzo:double
+                disponibile:string
+                data:data
+                
+		SESSION{nome_utente:string,user:string}
+output	{
+		data:data;
+	}
+			
+		
+6)Rimozione del noleggio
+end-point  /remove POST
+input
+		nome:string
+                anno:string
+		prezzo:double
+                disponibile:string
+                data:data
+		SESSION{nome_utente:string,user:string}
+output	{
+	        nome:string; anno:string; prezzo:double; disponibile:string; data:data
+		}
+		
+		
+		
+7)Mostra i film
+end-point  /view POST
+
+input	        nome:string
+                anno:string
+		prezzo:double
+                disponibile:string
+                data:data
+   
+           SESSION{
+                nome_utente:string,user:string
+           }
+ 
+output{
+		 nome:string; anno:string; prezzo:double; disponibile:string; data:data
+      }
