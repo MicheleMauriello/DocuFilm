@@ -5,6 +5,11 @@
 
 <html>
     <body>
+        <form action="Registrazione.jsp" method="post">
+            <input type="text" name="username" placeholder="Enter Username"><br>
+            <input name="password" required="" type="password" placeholder="Enter Password"><br>
+            <input type="submit" value="Login">
+          </form>
         <%
             String DRIVER = "net.ucanaccess.jdbc.UcanaccessDriver";
 			String user=null;
@@ -18,10 +23,10 @@
             }
             try{
 				user = request.getParameter("user");
-				psw = request.getParameter("pass");
+				pass = request.getParameter("pass");
                 connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
                 
-                String verifica = "SELECT username from Utenti WHERE username = '"+user+"';";
+                String verifica = "SELECT Username from Utenti WHERE Username = '"+user+"';";
                 Statement s = connection.createStatement();
                 ResultSet r = s.executeQuery(verifica);
                 if(r.next()){
