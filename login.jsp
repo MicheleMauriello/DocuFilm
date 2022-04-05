@@ -42,7 +42,7 @@
                                         }
                                         else
                                         {
-                                             response.getOutputStream().println("Benvenuto "+n);
+                                             response.sendRedirect("acquista.html");
                                         }
                                     }
                                     catch (Exception er) {
