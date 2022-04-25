@@ -30,6 +30,7 @@
                                         String query= "SELECT Nome FROM Utenti WHERE Username= '" + us + "' AND Password= '"+ pas +"';";
                                         Statement statement=connection.createStatement();
                                         ResultSet resultset=statement.executeQuery(query);
+                                        HttpSession s = request.getSession();
                                         String n=null;
                                         while(resultset.next())
                                         {
@@ -42,7 +43,8 @@
                                         }
                                         else
                                         {
-                                             response.sendRedirect("acquista.html");
+                                             s.setAttribute("username", n);
+                                             response.sendRedirect("acquista.jsp");
                                         }
                                     }
                                     catch (Exception er) {
