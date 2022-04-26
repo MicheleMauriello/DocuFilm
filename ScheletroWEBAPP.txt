@@ -46,7 +46,7 @@ output	{
 	}
 
 
-5)Scadenza del noleggio
+5)Scadenza del noleggio (creare due pulsanti: uno prenota e uno restituisci)
 end-point  /get POST
 input
 		nome:string
