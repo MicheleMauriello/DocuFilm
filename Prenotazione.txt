@@ -1,0 +1,3 @@
+Tabella Prenota:
+
+ID film, Username, Data

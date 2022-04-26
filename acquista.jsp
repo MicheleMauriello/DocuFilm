@@ -105,14 +105,16 @@ tr:nth-child(even) {
                     out.println("<th>Film</th>");
                     out.println("<th>Anno</th>");
                     out.println("<th>Prezzi</th>");
-                    out.println("<th>Quantit&agrave;</th></tr>");
+                    out.println("<th>Quantit&agrave;</th>");
+                    out.println("<th>Prenotazione</th></tr>");
                     while(resultset.next()){
                         id=resultset.getString(1);
                         out.println("<tr><td  >"+resultset.getString(1)+"</td>");
                         out.println("<td>"+resultset.getString(2)+"</td>");
                         out.println("<td>"+resultset.getString(4)+"</td>");
                         out.println("<td>"+resultset.getString(5)+" &euro;</td>");
-                        out.println("<td>"+resultset.getString(3)+"</td></tr>"); 
+                        out.println("<td>"+resultset.getString(3)+"</td>"); 
+                        out.println("<td><a href='prenota.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Prenota\"></a></td></tr>");
                                        
                         }
                         out.println("</table><br>");
