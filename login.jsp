@@ -27,7 +27,7 @@
                                         Connection connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
                                         String us=request.getParameter("username");
                                         String pas=request.getParameter("password");
-                                        String query= "SELECT Nome FROM Utenti WHERE Username= '" + us + "' AND Password= '"+ pas +"';";
+                                        String query= "SELECT Username FROM Utenti WHERE Username= '" + us + "' AND Password= '"+ pas +"';";
                                         Statement statement=connection.createStatement();
                                         ResultSet resultset=statement.executeQuery(query);
                                         HttpSession s = request.getSession();

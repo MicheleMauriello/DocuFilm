@@ -75,7 +75,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2>Lista di film da acquistare:</h2>
+<h2>Lista dei film noleggiati:</h2>
 
 
  
@@ -92,7 +92,7 @@ tr:nth-child(even) {
                 Connection connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
                 HttpSession s = request.getSession();
                 String nome = (String) s.getAttribute("username");
-                String query= "SELECT * FROM DocuFilm;";
+                String query= "SELECT * FROM Prenota WHERE Username='"+nome+"';";
                 Statement statement=connection.createStatement();
                 ResultSet resultset=statement.executeQuery(query);
                 String id=null;
@@ -101,20 +101,16 @@ tr:nth-child(even) {
                    
                     out.println("<table>");
                     out.println("<tr>");
-                    out.println("<th>ID</th>");
-                    out.println("<th>Film</th>");
-                    out.println("<th>Anno</th>");
-                    out.println("<th>Prezzi</th>");
-                    out.println("<th>Quantit&agrave;</th>");
-                    out.println("<th>Prenotazione</th></tr>");
+                    out.println("<th>IDFilm</th>");
+                    out.println("<th>Username</th>");
+                    out.println("<th>Data</th>");
+                    out.println("<th>Annulla</th></tr>");
                     while(resultset.next()){
                         id=resultset.getString(1);
-                        out.println("<tr><td  >"+resultset.getString(1)+"</td>");
-                        out.println("<td>"+resultset.getString(2)+"</td>");
-                        out.println("<td>"+resultset.getString(4)+"</td>");
-                        out.println("<td>"+resultset.getString(5)+" &euro;</td>");
-                        out.println("<td>"+resultset.getString(3)+"</td>"); 
-                        out.println("<td><a href='prenota.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Prenota\"></a></td></tr>");
+                        out.println("<td>"+resultset.getString(3)+"</td>");
+                        out.println("<td>"+resultset.getString(1)+"</td>");
+                        out.println("<td>"+resultset.getString(2).substring(0,10)+"</td>"); 
+                        out.println("<td><a href='Annulla.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Annulla\"></a></td></tr>");
                                        
                         }
                         out.println("</table><br>");
