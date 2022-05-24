@@ -77,7 +77,13 @@ tr:nth-child(even) {
 
 <h2>Lista di film da acquistare:</h2>
 
+<form action="acquista.jsp" method="POST">
+                   Cerca per titolo del film: <input type="text" id="cerca" name="cerca" placeholder="Nome film" required>
 
+       
+
+        <input type="submit" id="btn" name="btn" value="Cerca">
+    </form>
  
         <%@ page import="java.io.*" %>
         <%@ page import="java.sql.*" %>
@@ -89,38 +95,62 @@ tr:nth-child(even) {
                 System.out.println("Errore: Impossibile caricare il Driver Ucanaccess1");
             }
             try {
+                
+                String cerca = request.getParameter("cerca");
+
+
+                
                 Connection connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
                 HttpSession s = request.getSession();
                 String nome = (String) s.getAttribute("username");
-                String query= "SELECT * FROM DocuFilm;";
-                Statement statement=connection.createStatement();
-                ResultSet resultset=statement.executeQuery(query);
+                String query;
+                Statement statement;
+                ResultSet resultset;
                 String id=null;
                 
                 if(nome!=null){
-                   
-                    out.println("<table>");
-                    out.println("<tr>");
-                    out.println("<th>ID</th>");
-                    out.println("<th>Film</th>");
-                    out.println("<th>Anno</th>");
-                    out.println("<th>Prezzi</th>");
-                    out.println("<th>Quantit&agrave;</th>");
-                    out.println("<th>Prenotazione</th></tr>");
-                    while(resultset.next()){
-                        id=resultset.getString(1);
-                        out.println("<tr><td  >"+resultset.getString(1)+"</td>");
-                        out.println("<td>"+resultset.getString(2)+"</td>");
-                        out.println("<td>"+resultset.getString(4)+"</td>");
-                        out.println("<td>"+resultset.getString(5)+" &euro;</td>");
-                        out.println("<td>"+resultset.getString(3)+"</td>"); 
-                        out.println("<td><a href='prenota.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Prenota\"></a></td></tr>");
-                                       
+                        if(cerca==null){
+                           
+                           query= "SELECT * FROM DocuFilm;";
                         }
-                        out.println("</table><br>");
-                    if(id==null){
-                        out.println("Nessun dvd disponibile");
-                    }
+                        else{
+
+                          query = "SELECT * FROM DocuFilm WHERE Film='"+cerca+"';";
+
+
+                        }
+                           statement=connection.createStatement();
+                           resultset=statement.executeQuery(query);
+                      
+                        out.println("<table>");
+                        out.println("<tr>");
+                        out.println("<th>ID</th>");
+                        out.println("<th>Film</th>");
+                        out.println("<th>Anno</th>");
+                        out.println("<th>Prezzi</th>");
+                        out.println("<th>Quantit&agrave;</th>");
+                        out.println("<th>Prenotazione</th></tr>");
+                        while(resultset.next()){
+                            id=resultset.getString(1);
+                            out.println("<tr><td  >"+resultset.getString(1)+"</td>");
+                            out.println("<td>"+resultset.getString(2)+"</td>");
+                            out.println("<td>"+resultset.getString(4)+"</td>");
+                            out.println("<td>"+resultset.getString(5)+" &euro;</td>");
+                            out.println("<td>"+resultset.getString(3)+"</td>"); 
+                            out.println("<td><a href='prenota.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Prenota\"></a></td></tr>");
+                                          
+                            }
+                            out.println("</table><br>");
+                            if(cerca!=null){
+
+                                 out.println("<a href='acquista.jsp'><input type='submit' value='Visualizza i film' /> <br></a>");
+                              
+
+                            }
+                        if(id==null){
+                            out.println("Nessun dvd disponibile");
+                        }
+                    
                 }
                 else{
                     out.println("<a href=\"index.html\"><input type=\"submit\" value=\"Non ti sei ancora loggato\" /> <br></a>");

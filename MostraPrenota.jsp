@@ -110,7 +110,7 @@ tr:nth-child(even) {
                         out.println("<td>"+resultset.getString(3)+"</td>");
                         out.println("<td>"+resultset.getString(1)+"</td>");
                         out.println("<td>"+resultset.getString(2).substring(0,10)+"</td>"); 
-                        out.println("<td><a href='Annulla.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Annulla\"></a></td></tr>");
+                        out.println("<td><a href='Annulla.jsp?id="+resultset.getString(4)+"'><input type=\"submit\" value=\"Annulla\"></a></td></tr>");
                                        
                         }
                         out.println("</table><br>");
@@ -128,6 +128,6 @@ tr:nth-child(even) {
 
     %>
     <a href="logout.jsp"><input type="submit" value="Logout" /> <br></a>
-    <a href="MostraPrenota.jsp"><input type="submit" value="Mostra Prenotazioni" /> <br></a>
+    <a href="acquista.jsp"><input type="submit" value="Visualizza i film" /> <br></a>
     </body>
 </html>
