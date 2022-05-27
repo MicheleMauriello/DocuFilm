@@ -90,27 +90,27 @@ tr:nth-child(even) {
             }
             try {
                 Connection connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
-                HttpSession s = request.getSession();
-                String nome = (String) s.getAttribute("username");
-                String query= "SELECT * FROM Prenota WHERE Username='"+nome+"';";
+                HttpSession s = request.getSession(); // attivo la sessione
+                String nome = (String) s.getAttribute("username"); // viene richiesto il valore dell'attributo di sessione (username)
+                String query= "SELECT * FROM Prenota WHERE Username='"+nome+"';"; // seleziona i noleggi dell'utente
                 Statement statement=connection.createStatement();
                 ResultSet resultset=statement.executeQuery(query);
                 String id=null;
                 
                 if(nome!=null){
-                   
+                    // mostra i dvd noleggiati
                     out.println("<table>");
                     out.println("<tr>");
                     out.println("<th>IDFilm</th>");
                     out.println("<th>Username</th>");
                     out.println("<th>Data</th>");
-                    out.println("<th>Annulla</th></tr>");
+                    out.println("<th>Restituisci</th></tr>");
                     while(resultset.next()){
                         id=resultset.getString(1);
                         out.println("<td>"+resultset.getString(3)+"</td>");
                         out.println("<td>"+resultset.getString(1)+"</td>");
                         out.println("<td>"+resultset.getString(2).substring(0,10)+"</td>"); 
-                        out.println("<td><a href='Annulla.jsp?id="+resultset.getString(4)+"'><input type=\"submit\" value=\"Annulla\"></a></td></tr>");
+                        out.println("<td><a href='Annulla.jsp?id="+resultset.getString(4)+"'><input type=\"submit\" value=\"Restituisci\"></a></td></tr>");
                                        
                         }
                         out.println("</table><br>");

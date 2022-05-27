@@ -14,7 +14,6 @@
 <html>
 
   <head>
-    <title>Prenota</title>
 
     <style>
     body {
@@ -80,13 +79,13 @@ li a:hover {
 
         try{
             connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
-            HttpSession s = request.getSession();
-            String n = (String) s.getAttribute("username"); //nome
-            int id = Integer.parseInt(request.getParameter("id"));
+            HttpSession s = request.getSession(); //attivo la sessione
+            String n = (String) s.getAttribute("username"); //viene richiesto il valore dell'attributo di sessione (username)
+            int id = Integer.parseInt(request.getParameter("id")); //viene richiesto l'id del film
             
 
             if(n!=null){
-                    String queryVerifica = "SELECT ID FROM Prenota WHERE ID="+id+";";
+                    String queryVerifica = "SELECT ID FROM Prenota WHERE ID="+id+";"; //controlla l'esistenza del noleggio
             
                     st = connection.createStatement();
                    
@@ -95,11 +94,11 @@ li a:hover {
 
                      if(resultset.next()){
                         
-                        String queryparz = "SELECT IDFilm FROM Prenota WHERE ID="+id+" AND Username='"+n+"';";
+                        String queryparz = "SELECT IDFilm FROM Prenota WHERE ID="+id+" AND Username='"+n+"';"; //query parziale che seleziona id del film
                         resultset2=st.executeQuery(queryparz);
                         String IDFilm=null;
                         
-                        if(resultset2.next()){
+                        if(resultset2.next()){ 
                             
                             IDFilm=resultset2.getString(1);
 
@@ -117,7 +116,7 @@ li a:hover {
                             
                             q=Integer.parseInt(resultset2.getString(1));
                             q++;
-                            query2="UPDATE DocuFilm SET Quantita="+q+" WHERE ID = "+IDFilm+" ;";
+                            query2="UPDATE DocuFilm SET Quantita="+q+" WHERE ID = "+IDFilm+" ;";// aggiorna la quantità
                             st.executeUpdate(query2);
 
                         }
@@ -125,13 +124,13 @@ li a:hover {
                             out.println("Errore nel database!!");
                         }
 
-                        query = "DELETE FROM Prenota WHERE ID="+id+" AND Username='"+n+"';";
+                        query = "DELETE FROM Prenota WHERE ID="+id+" AND Username='"+n+"';"; // cancella il noleggio
                         st.executeUpdate(query);
-                        out.println("Eliminazione prenotazione eseguita con successo");
+                        out.println("Restituzione eseguita con successo");
                         
                      }
                      else{
-                        out.println("Errore:la prenotazione non è più presente nel database ");
+                        out.println("Errore: il noleggio non è più presente nel database ");
                       }  
                    
 
@@ -144,6 +143,6 @@ li a:hover {
                 System.out.println(er);
             }    
     %>
-    <a href="MostraPrenota.jsp"><input type="submit" value="Mostra Prenotazioni" /> <br></a>
+    <a href="MostraPrenota.jsp"><input type="submit" value="Mostra Noleggi" /> <br></a>
 </body>
 </html>

@@ -81,9 +81,9 @@ li a:hover {
 
         try{
             connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
-            HttpSession s = request.getSession();
-            String n = (String) s.getAttribute("username"); //nome
-            int id = Integer.parseInt(request.getParameter("id"));
+            HttpSession s = request.getSession(); //viene attivata la sessione
+            String n = (String) s.getAttribute("username"); //viene richiesto il valore dell'attributo di sessione (username)
+            int id = Integer.parseInt(request.getParameter("id")); // id del film che si vuole noleggiare
             
 
             if(n!=null){
@@ -92,7 +92,7 @@ li a:hover {
 		            Date d = new Date(miliseconds);        
 		            data = dateFormat.format(d);
                   
-                    String queryVerifica = "SELECT Quantita FROM DocuFilm WHERE ID="+id+" AND Quantita=0";
+                    String queryVerifica = "SELECT ID FROM DocuFilm WHERE ID="+id+" AND Quantita=0"; //seleziono ID del film se la quantità è 0
             
                     st = connection.createStatement();
                    
@@ -107,8 +107,8 @@ li a:hover {
                          
                         query = "INSERT INTO Prenota (IDFilm,Username,Data) values ("+id+", '"+n+"',#"+data+"#);";
                         st.executeUpdate(query);
-                        out.println("Prenotazione eseguita con successo");
-                        String query2 = "SELECT Quantita FROM DocuFilm WHERE ID="+id;
+                        out.println("Noleggio eseguito con successo");
+                        String query2 = "SELECT Quantita FROM DocuFilm WHERE ID="+id; //seleziono la quantità del film per poter decrementarne il valore 
                         resultset=st.executeQuery(query2);
                         int q=0; //quantità
                         
@@ -121,7 +121,7 @@ li a:hover {
                             out.println("Errore nel database!!");
                         }
                         q--;
-                        query2="UPDATE DocuFilm SET Quantita="+q+" WHERE ID=" +id;
+                        query2="UPDATE DocuFilm SET Quantita="+q+" WHERE ID=" +id;// questa query serve ad aggiornare la quantità del dvd
                         st.executeUpdate(query2);
                         
                       }  

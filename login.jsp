@@ -30,8 +30,8 @@
                                         String query= "SELECT Username FROM Utenti WHERE Username= '" + us + "' AND Password= '"+ pas +"';";
                                         Statement statement=connection.createStatement();
                                         ResultSet resultset=statement.executeQuery(query);
-                                        HttpSession s = request.getSession();
-                                        String n=null;
+                                        HttpSession s = request.getSession(); //attivo la sessione
+                                        String n=null; //nome
                                         while(resultset.next())
                                         {
                                             n=resultset.getString(1);
@@ -43,7 +43,7 @@
                                         }
                                         else
                                         {
-                                             s.setAttribute("username", n);
+                                             s.setAttribute("username", n);// serve a salvare il valore del nome nell'attributo di sessione (username)
                                              response.sendRedirect("acquista.jsp");
                                         }
                                     }

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <html>
         <body>
-            <h1>Sign-up Cliente</h1>
+            <h1>Registrazione Cliente</h1>
                 <form action="Registrazione.jsp" method="POST">
                      Nome: <input type="text" id="nome" name="nome" placeholder="nome" required> Cognome: <input type="text" id="cognome" name="cognome" placeholder="cognome" required>
 
@@ -39,9 +39,10 @@
             cognome = request.getParameter("cognome");
             username = request.getParameter("username");
             password = request.getParameter("password");
-            
+            if(nome!=null){ 
+
             connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
-            String verifica = "SELECT Username from Utenti WHERE Username = '"+username+"';";
+            String verifica = "SELECT Username from Utenti WHERE Username = '"+username+"';"; // controlla che non ci siano utenti con lo stesso username
             Statement st = connection.createStatement();          
             ResultSet result = st.executeQuery(verifica);
             if(result.next()){
@@ -51,7 +52,7 @@
                 st.executeUpdate(query);
                 response.sendRedirect("index.html");
             }
-            
+          }  
         }
         catch(Exception e){
             out.println(e);

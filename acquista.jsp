@@ -75,7 +75,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2>Lista di film da acquistare:</h2>
+<h2>Lista di film da noleggiare:</h2>
 
 <form action="acquista.jsp" method="POST">
                    Cerca per titolo del film: <input type="text" id="cerca" name="cerca" placeholder="Nome film" required>
@@ -101,21 +101,21 @@ tr:nth-child(even) {
 
                 
                 Connection connection = DriverManager.getConnection("jdbc:ucanaccess://" + request.getServletContext().getRealPath("/") + "Vuoto.accdb");
-                HttpSession s = request.getSession();
-                String nome = (String) s.getAttribute("username");
+                HttpSession s = request.getSession(); // attivo la sessione
+                String nome = (String) s.getAttribute("username"); //viene richiesto il valore dell'attributo di sessione (username)
                 String query;
                 Statement statement;
                 ResultSet resultset;
                 String id=null;
                 
-                if(nome!=null){
-                        if(cerca==null){
+                if(nome!=null){ //controlla se ti sei loggato
+                        if(cerca==null){ //serve a controllare che l'utente non stia effettuando la ricerca
                            
-                           query= "SELECT * FROM DocuFilm;";
+                           query= "SELECT * FROM DocuFilm;"; //seleziona tutti i film
                         }
                         else{
 
-                          query = "SELECT * FROM DocuFilm WHERE Film='"+cerca+"';";
+                          query = "SELECT * FROM DocuFilm WHERE Film='"+cerca+"';"; //seleziona il film con un determinato titolo
 
 
                         }
@@ -129,15 +129,15 @@ tr:nth-child(even) {
                         out.println("<th>Anno</th>");
                         out.println("<th>Prezzi</th>");
                         out.println("<th>Quantit&agrave;</th>");
-                        out.println("<th>Prenotazione</th></tr>");
+                        out.println("<th>Noleggio</th></tr>");
                         while(resultset.next()){
-                            id=resultset.getString(1);
-                            out.println("<tr><td  >"+resultset.getString(1)+"</td>");
+                            id=resultset.getString(1); //viene utilizzato per controllare che ci siano dei risultati
+                            out.println("<tr><td>"+resultset.getString(1)+"</td>");
                             out.println("<td>"+resultset.getString(2)+"</td>");
                             out.println("<td>"+resultset.getString(4)+"</td>");
                             out.println("<td>"+resultset.getString(5)+" &euro;</td>");
                             out.println("<td>"+resultset.getString(3)+"</td>"); 
-                            out.println("<td><a href='prenota.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Prenota\"></a></td></tr>");
+                            out.println("<td><a href='prenota.jsp?id="+resultset.getString(1)+"'><input type=\"submit\" value=\"Noleggia\"></a></td></tr>");
                                           
                             }
                             out.println("</table><br>");
@@ -147,7 +147,7 @@ tr:nth-child(even) {
                               
 
                             }
-                        if(id==null){
+                        if(id==null){ // se non trova nessun risultato stampa nessun dvd disponibile
                             out.println("Nessun dvd disponibile");
                         }
                     
@@ -162,6 +162,6 @@ tr:nth-child(even) {
 
     %>
     <a href="logout.jsp"><input type="submit" value="Logout" /> <br></a>
-    <a href="MostraPrenota.jsp"><input type="submit" value="Mostra Prenotazioni" /> <br></a>
+    <a href="MostraPrenota.jsp"><input type="submit" value="Mostra Noleggi" /> <br></a>
     </body>
 </html>
