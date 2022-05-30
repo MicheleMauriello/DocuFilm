@@ -115,7 +115,7 @@ tr:nth-child(even) {
                         }
                         else{
 
-                          query = "SELECT * FROM DocuFilm WHERE Film='"+cerca+"';"; //seleziona il film con un determinato titolo
+                          query = "SELECT * FROM DocuFilm WHERE Film LIKE '%"+cerca+"%';"; //seleziona il film con un determinato titolo
 
 
                         }
